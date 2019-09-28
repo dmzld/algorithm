@@ -29,13 +29,9 @@ int main(){
 
 	cin >> N;
 
-	fflush(stdin);
 	for (int i = 0; i < N; i++){
-		fflush(stdin);
 		for (int j = 0; j < N; j++){
-			char a;
-			scanf("%c", &a);
-			data[i][j] = (int)(a - '0');
+			scanf("%1d", &data[i][j]);
 		}
 	}
 

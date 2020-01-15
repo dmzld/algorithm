@@ -6,17 +6,17 @@ using namespace std;
 int N;
 int res = 0;
 
-void moving(int b[][20], int dir, int cnt);
+void shift(int b[][20], int dir, int cnt);
 void solution(int b[][20], int cnt);
 
 
-void moving(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : left
+void shift(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : left
 	int cb[20][20];
 	for (int i = 0; i < N; i++){
 		for (int j = 0; j < N; j++){
 			cb[i][j] = b[i][j];
 		}
-	}	
+	}
 	// MOVE UP
 	if (dir == 0){
 		// Add if same & adjust
@@ -30,6 +30,8 @@ void moving(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : 
 						cb[pos][j] *= 2;
 						cb[i][j] = 0;
 					}
+					else // this point is add finally
+						i--;
 				}
 			}
 		}
@@ -53,7 +55,7 @@ void moving(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : 
 		// Add if same & adjust
 		for (int i = 0; i < N; i++){ // column
 			for (int j = N - 1; j >= 0; j--){ // row
-				if (cb[i][j] != 0 && j > 0){
+				if (cb[i][j] != 0 && j > 0){ 
 					int pos = j--;
 					while (j > 0 && cb[i][j] == 0)
 						j--;
@@ -61,6 +63,8 @@ void moving(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : 
 						cb[i][pos] *= 2;
 						cb[i][j] = 0;
 					}
+					else
+						j++;
 				}
 			}
 		}
@@ -92,6 +96,8 @@ void moving(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : 
 						cb[pos][j] *= 2;
 						cb[i][j] = 0;
 					}
+					else
+						i++;
 				}
 			}
 		}
@@ -123,6 +129,8 @@ void moving(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : 
 						cb[i][pos] *= 2;
 						cb[i][j] = 0;
 					}
+					else
+						j--;
 				}
 			}
 		}
@@ -143,11 +151,10 @@ void moving(int b[][20], int dir, int cnt){ // 0 : up, 1 : right, 2 : down, 3 : 
 	}
 	
 	/*
-	cout << "dir is " << dir << "\n";
-	cout << cnt << "th\n";
+	cout << cnt << "th, dir = " << dir << "\n";
 	for (int i = 0; i < N; i++){
 		for (int j = 0; j < N; j++){
-			cout << cb[i][j] << " ";
+			cout << b[i][j] << " ";
 		}cout << "\n";
 	}cout << "\n\n";
 	*/
@@ -168,7 +175,7 @@ void solution(int b[][20], int cnt){
 	}
 
 	for (int i = 0; i < 4; i++){
-		moving(b, i, cnt);
+		shift(b, i, cnt);
 	}
 }
 

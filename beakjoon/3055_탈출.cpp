@@ -1,99 +1,96 @@
 #include <iostream>
-#include <cstring>
-#include <queue>
 #include <utility>
+#include <queue>
 
 using namespace std;
 
+int R, C;
+char map[50][50];
+int visited[50][50];
 
-int R, S;
-char map[50][50]; // . * X D S
-bool visited[50][50];
-queue<pair<int,int> > flooded;
-queue<pair<int,int> > pos;
-int dx[4] = { 0, 0, 1, -1 };
+queue< pair<int, int> > p;
+queue< pair<int, int> > w;
+
+int dx[4] = { 0, 0, -1, 1 };
 int dy[4] = { 1, -1, 0, 0 };
-int res = 0;
 
+int solution(){
+	
+	while (!p.empty()){
+		int ws = w.size();
+		int ps = p.size();
 
-void solution(){
-	int cnt = 1;
-
-	while (!pos.empty()){
-		int fSize = flooded.size();
-		int pSize = pos.size();
-		
 		// flooding
-		for (int j = 0; j < fSize; j++){
-			int y = flooded.front().first;
-			int x = flooded.front().second;
-			flooded.pop();
+		for (int i = 0; i < ws; i++){
+			int y = w.front().first;
+			int x = w.front().second;
+			w.pop();
 
-			for (int i = 0; i < 4; i++){
-				int cy = y + dy[i];
-				int cx = x + dx[i];
+			for (int j = 0; j < 4; j++){
+				int cy = y + dy[j];
+				int cx = x + dx[j];
 
-				if (cy < 0 || cy >= R || cx < 0 || cx >= S)
+				if (cy < 0 || cy >= R || cx < 0 || cx >= C)
 					continue;
 				if (map[cy][cx] != '.')
 					continue;
 
 				map[cy][cx] = '*';
-				flooded.push(make_pair(cy, cx));
+				w.push(make_pair(cy, cx));
 			}
 		}
 
-		// move
-		for (int j = 0; j < pSize; j++){
-			int y = pos.front().first;
-			int x = pos.front().second;
-			pos.pop();
+		// moving
+		for (int i = 0; i < ps; i++){
+			int y = p.front().first;
+			int x = p.front().second;
+			p.pop();
 
-			for (int i = 0; i < 4; i++){
-				int cy = y + dy[i];
-				int cx = x + dx[i];
+			for (int j = 0; j < 4; j++){
+				int cy = y + dy[j];
+				int cx = x + dx[j];
 
-				if (cy < 0 || cy >= R || cx < 0 || cx >= S)
+				if (cy < 0 || cy >= R || cx < 0 || cx >= C)
 					continue;
-
-				// arrive
+				
 				if (map[cy][cx] == 'D'){
-					res = cnt;
-					return;
+					return visited[y][x] + 1;
 				}
-				// move to next position
-				if (map[cy][cx] == '.' && !visited[cy][cx])
-					visited[cy][cx] = true;
-					pos.push(make_pair(cy, cx));
+				else if (map[cy][cx] == '.' && !visited[cy][cx]){
+					visited[cy][cx] = visited[y][x] + 1;
+					p.push(make_pair(cy, cx));
+				}
+
 			}
 		}
-	
-		cnt++;
 	}
-	
+
+	return -1;
 }
 
 int main(){
+	int res = 0;
 
-	cin >> R >> S;
+	cin >> R >> C;
 	for (int i = 0; i < R; i++){
-		for (int j = 0; j < S; j++){
+		for (int j = 0; j < C; j++){
 			cin >> map[i][j];
 			if (map[i][j] == 'S'){
-				pos.push(make_pair(i, j));
+				visited[i][j] = 0;
 				map[i][j] = '.';
+				p.push(make_pair(i, j));
 			}
-			if (map[i][j] == '*')
-				flooded.push(make_pair(i, j));
+			if (map[i][j] == '*'){
+				w.push(make_pair(i, j));
+			}
 		}
 	}
 
-	solution();
+	res = solution();
 
-	if (res)
-		cout << res;
-	else
+	if (res == -1)
 		cout << "KAKTUS";
+	else
+		cout << res;
 
-	return 0;
 }

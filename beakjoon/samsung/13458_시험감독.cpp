@@ -20,11 +20,15 @@ int main(){
 	ans = N;
 	
 	for (int i = 0; i < N; i++){
-		int num = room[i] - B;
+		/*int num = room[i] - B;
 		if (num > 0){
 			ans += num / C;
 			if (num % C)
 				ans++;
+		}*/
+		room[i] -= B;
+		if (room[i] > 0){
+			ans += (room[i] % C == 0) ? (room[i] / C) : (room[i] / C + 1);
 		}
 	}
 	cout << ans;

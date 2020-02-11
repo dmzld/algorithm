@@ -1,10 +1,12 @@
 #include <iostream>
+#include <vector>
 #include <queue>
 
 using namespace std;
 
 int N, M;
 int map[8][8];
+vector<pair<int, int>> v;
 int dy[4] = { 0, 0, -1, 1 };
 int dx[4] = { -1, 1, 0, 0 };
 int ans = 0;
@@ -58,31 +60,24 @@ int main(){
 
 	cin >> N >> M;
 	for (int i = 0; i < N; i++)
-		for (int j = 0; j < M; j++)
-			cin >> map[i][j];
-
-	for (int i = 0; i < N; i++){
 		for (int j = 0; j < M; j++){
-			if (map[i][j] == 0){
-				map[i][j] = 1; // wall 1
-				for (int p = 0; p < N; p++){
-					for (int q = 0; q < M; q++){
-						if (map[p][q] == 0){
-							map[p][q] = 1; //  wall 2
-							for (int r = 0; r < N; r++){
-								for (int s = 0; s < M; s++){
-									if (map[r][s] == 0){
-										map[r][s] = 1; // wall 3
-										bfs();
-										map[r][s] = 0;
-									}
-								}
-							}
-							map[p][q] = 0;
-						}
-					}
-				}
-				map[i][j] = 0;
+			cin >> map[i][j];
+			if (map[i][j] == 0)
+				v.push_back({ i, j }); // this point reduce code & loop
+		}
+
+	for (int i = 0; i < v.size() - 2; i++){
+		for (int j = i + 1; j < v.size() - 1; j++){
+			for (int k = j + 1; k < v.size(); k++){
+				map[v[i].first][v[i].second] = 1;
+				map[v[j].first][v[j].second] = 1;
+				map[v[k].first][v[k].second] = 1;
+
+				bfs();
+				
+				map[v[i].first][v[i].second] = 0;
+				map[v[j].first][v[j].second] = 0;
+				map[v[k].first][v[k].second] = 0;
 			}
 		}
 	}

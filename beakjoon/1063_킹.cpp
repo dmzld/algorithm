@@ -1,9 +1,11 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 pair<int, int> king, stone; // col, row
 int N;
+string str;
 
 bool meet(int col, int row){
 	if (king.first + col == stone.first&&king.second + row == stone.second)

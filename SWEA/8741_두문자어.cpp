@@ -9,7 +9,7 @@ int TC;
 int main(){
 
 	cin >> TC;
-	cin.ignore(); // point
+	cin.ignore(); // point :  To use getline(cin, str) after cin, clear buffer because '\n' is remained in buffer 
 
 	for (int tc = 1; tc <= TC; tc++){
 		string str;

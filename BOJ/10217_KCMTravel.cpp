@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// DP & Dijkstra
+
 int T, N, M, K;
 int u, v, c, d;
 vector<pair<int, pair<int, int>>> G[101]; // G[from] = { cost, { distance, to }}

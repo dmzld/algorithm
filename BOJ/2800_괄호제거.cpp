@@ -52,20 +52,18 @@ int main(){
 	for (int i = 1; i <= couple.size(); i++) // except couple as many as i
 		findEq(i, 0);
 
-	/*
-	input : (((1)))(2) => FAIL
-
+	sort(v.begin(), v.end()); // vector.unique erase only successive element, so try sorting firstly
 	v.erase(unique(v.begin(), v.end()), v.end());
-	sort(v.begin(), v.end());
 	for (int i = 0; i < v.size(); i++)
 		cout << v[i] << "\n";
-	*/
-
+	
+	/*
 	sort(v.begin(), v.end());
 	cout << v[0] << "\n";
 	for (int i = 1; i < v.size(); i++)
 		if (v[i]!=v[i-1])
 			cout << v[i] << "\n";
-
+	*/
+	
 	return 0;
 }

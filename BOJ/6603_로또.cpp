@@ -14,11 +14,10 @@ void dfs(int idx, int cnt){ // idx == cur idx of S, cnt == # of selected num
 	}
 
 
-	res[cnt] = S[idx];
-	dfs(idx + 1, cnt + 1); 
-	if (K - (idx + 1) >= 6 - cnt)
-		dfs(idx + 1, cnt);
-
+	for (int i = idx; i < K; i++){
+		res[cnt] = S[i];
+		dfs(i + 1, cnt + 1); 
+	}
 	return;
 }
 

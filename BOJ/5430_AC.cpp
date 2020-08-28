@@ -1,76 +1,72 @@
 #include <iostream>
-#include <algorithm>
-#include <cmath>
 #include <string>
-#include <cstring>
-#include <vector>
 #include <deque>
+#include <algorithm>
 
 using namespace std;
 
-int T, n;
-string p, tmp , num = "";
-deque<int> arr;
+int T, N;
+string P, arr;
 
+void solution(){
+	deque<int> d;
+	int R = 0; // %2 == 0 : normal, %2 == 1 : reverse
+
+	for (int i = 0; i < arr.length(); i++){
+		if (arr[i] < '0' || arr[i] > '9')
+			continue;
+
+		int res = 0;
+		while (arr[i] >= '0' && arr[i] <= '9'){
+			res = res * 10 + (int)(arr[i] - '0');
+			i++;
+		}
+
+		d.push_back(res);
+	}
+
+	for (int i = 0; i < P.length(); i++){
+		if (P[i] == 'R'){
+			R++;
+		}
+		else if (P[i] == 'D'){
+			if (d.empty()){
+				cout << "error\n";
+				return;
+			}
+
+			if (R % 2 == 0)
+				d.pop_front();
+			else
+				d.pop_back();
+		}
+	}
+
+	if (R % 2 == 1)
+		reverse(d.begin(), d.end());
+
+	cout << "[";
+	while (!d.empty()){
+		cout << d.front();
+		d.pop_front();
+
+		if (!d.empty())
+			cout << ",";
+	}
+	cout << "]\n";
+}
 
 int main(){
 
-	ios_base::sync_with_stdio(NULL);
-	cin.tie(NULL); cout.tie(NULL);
+	ios::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
 
 	cin >> T;
 	for (int t = 0; t < T; t++){
-		cin >> p >> n >> tmp;
+		cin >> P >> N >> arr;
 
-		bool error = false;
-
-		for (int i = 0; i < tmp.length(); i++){
-			if (tmp[i] >= '0' && tmp[i] <= '9')
-				num += tmp[i];
-			else if ((tmp[i] == ',' || tmp[i] == ']') && num.length() > 0){
-				arr.push_back(stoi(num));
-				num = "";
-			}
-		}
-
-		// check error
-		if (n != arr.size())
-			error = true;
-
-		int R = 0;
-		for (int i = 0; i < p.length(); i++){
-			if (p[i] == 'R')
-				R++;
-			else if (p[i] == 'D'){
-        // check error
-				if (arr.empty()){
-					error = true;
-					break;
-				}
-				if (R % 2 == 1) // reverse
-					arr.pop_back();
-				else // not reverse
-					arr.pop_front();
-			}
-		}
-		if (R % 2 == 1) reverse(arr.begin(), arr.end());
-
-		
-		if (error)
-			cout << "error\n";
-		else{
-			if (arr.empty())
-				cout << "[]\n";
-			else{
-				cout << "[";
-				for (int i = 0; i < arr.size() - 1; i++)
-					cout << arr[i] << ",";
-				cout << arr[arr.size() - 1] << "]\n";
-			}
-		}
-
-		arr.clear();
+		solution();
 	}
-	
+
 	return 0;
 }

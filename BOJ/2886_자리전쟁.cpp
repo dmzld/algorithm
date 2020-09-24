@@ -25,7 +25,6 @@ struct state{
 };
 
 int R, C;
-const int MAX = 200001;
 char map[101][101];
 vector<pair<int, int>> v; // empty seat
 priority_queue<info, vector<info>, comp> pq;
@@ -56,7 +55,8 @@ int main(){
 			}
 		}
 	}
-
+	
+	// 사람은 자기보다 가까운 사람이 없는 자리 중 가장 가까운 자리에 앉는다
 	while (!pq.empty()){
 		info tmp = pq.top();
 		pq.pop();

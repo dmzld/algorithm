@@ -29,24 +29,17 @@ int main(){
 
 	cin >> V;
 
-	for (int i = 0; i < V;i++){
+	for (int i = 0; i < V - 1; i++){
 		int v1, v2, d;
-		cin >> v1;
-		while (1){
-			cin >> v2;
-			if (v2 == -1) break;
-			cin >> d;
+		cin >> v1 >> v2 >> d;
 
-			G[v1].push_back({ v2, d });
-			G[v2].push_back({ v1, d });
-		}
+		G[v1].push_back({ v2, d });
+		G[v2].push_back({ v1, d });
 	}
-	
-	// ***node 1 always exists
+	// node 1 always exists
 	dfs(1, 0);
-	memset(check, false, (V + 1)*sizeof(bool));
-	
-  // ***from leafNode, find real the longest distance
+	memset(check, false, sizeof(check));
+	// from leafNode, find real the longest distance
 	dfs(leafNode, 0);
 
 	cout << ans;

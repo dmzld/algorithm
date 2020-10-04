@@ -20,7 +20,7 @@ int main(){
 		cin >> A >> B;
 
 		memset(check, false, sizeof(check));
-		queue<pair<int,string>> q;
+		queue<pair<int, string>> q;
 		q.push({ A, "" });
 		check[A] = true;
 
@@ -30,15 +30,14 @@ int main(){
 			q.pop();
 
 			if (num == B){
-				cout << str << "\n";
+				cout << str << endl;
 				break;
 			}
 
 			int nnum;
+
 			// D
-			nnum = num * 2;
-			if (nnum > 9999)
-				nnum %= 10000;
+			nnum = (num * 2) % 10000;
 			if (!check[nnum]){
 				check[nnum] = true;
 				q.push({ nnum, str + 'D' });
@@ -46,7 +45,7 @@ int main(){
 
 			// S
 			nnum = num - 1;
-			if (nnum == 0)
+			if (nnum < 0)
 				nnum = 9999;
 			if (!check[nnum]){
 				check[nnum] = true;
